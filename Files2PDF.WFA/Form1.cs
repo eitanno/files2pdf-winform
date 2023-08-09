@@ -120,9 +120,17 @@ namespace Files2PDFWFA
 
         private void RefreshFileList()
         {
+            
             fileListBox.Items.Clear();
-            fileListBox.Items.AddRange(uploadedFiles.ToArray());
+            for (int i = 0; i < uploadedFiles.Count; i++)
+            {
+                string itemText = $"{i + 1}. {uploadedFiles[i]}";
+                fileListBox.Items.Add(itemText);
+
+            }
         }
+
+
 
 
         private void RemoveButton_Click(object sender, EventArgs e)
@@ -212,5 +220,9 @@ namespace Files2PDFWFA
             pictureBoxLoader.Refresh();
         }
 
+        private void helpToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("יש לבחור את הקבצים", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
     }
 }

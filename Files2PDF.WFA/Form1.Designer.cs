@@ -32,29 +32,33 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             fileListBox = new ListBox();
             UploadButton = new Button();
-            pictureBox1 = new PictureBox();
             ConvertToPDFButton = new Button();
             ClearAllButton = new Button();
             MoveUpButton = new Button();
             MoveDownButton = new Button();
             RemoveButton = new Button();
-            pictureBox2 = new PictureBox();
             HelpToolTip = new ToolTip(components);
             pictureBoxLoader = new PictureBox();
             folderBrowserDialog = new FolderBrowserDialog();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
+            menuStrip1 = new MenuStrip();
+            toolStripMenuItem1 = new ToolStripMenuItem();
+            LoadFilesToolStripMenuItem = new ToolStripMenuItem();
+            ExportToolStripMenuItem = new ToolStripMenuItem();
+            clearAllToolStripMenuItem = new ToolStripMenuItem();
+            helpToolStripMenuItem = new ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)pictureBoxLoader).BeginInit();
+            menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // fileListBox
             // 
             fileListBox.FormattingEnabled = true;
-            fileListBox.ItemHeight = 20;
-            fileListBox.Location = new Point(190, 139);
+            fileListBox.ItemHeight = 40;
+            fileListBox.Location = new Point(20, 102);
             fileListBox.Name = "fileListBox";
-            fileListBox.Size = new Size(644, 424);
+            fileListBox.Size = new Size(797, 504);
             fileListBox.TabIndex = 0;
+
             // 
             // UploadButton
             // 
@@ -65,7 +69,7 @@
             UploadButton.ForeColor = Color.FromArgb(38, 144, 148);
             UploadButton.Image = (Image)resources.GetObject("UploadButton.Image");
             UploadButton.ImageAlign = ContentAlignment.MiddleLeft;
-            UploadButton.Location = new Point(425, 86);
+            UploadButton.Location = new Point(829, 218);
             UploadButton.Name = "UploadButton";
             UploadButton.Padding = new Padding(5, 0, 0, 0);
             UploadButton.Size = new Size(173, 41);
@@ -74,16 +78,6 @@
             UploadButton.TextAlign = ContentAlignment.MiddleRight;
             UploadButton.UseVisualStyleBackColor = false;
             UploadButton.Click += UploadButton_Click;
-            // 
-            // pictureBox1
-            // 
-            pictureBox1.BackgroundImageLayout = ImageLayout.None;
-            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(857, 30);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(142, 58);
-            pictureBox1.TabIndex = 7;
-            pictureBox1.TabStop = false;
             // 
             // ConvertToPDFButton
             // 
@@ -94,7 +88,7 @@
             ConvertToPDFButton.ForeColor = Color.FromArgb(175, 13, 0);
             ConvertToPDFButton.Image = (Image)resources.GetObject("ConvertToPDFButton.Image");
             ConvertToPDFButton.ImageAlign = ContentAlignment.MiddleLeft;
-            ConvertToPDFButton.Location = new Point(12, 580);
+            ConvertToPDFButton.Location = new Point(829, 454);
             ConvertToPDFButton.Name = "ConvertToPDFButton";
             ConvertToPDFButton.Padding = new Padding(5, 0, 0, 0);
             ConvertToPDFButton.Size = new Size(173, 41);
@@ -106,7 +100,7 @@
             // 
             // ClearAllButton
             // 
-            ClearAllButton.BackColor = Color.Transparent;
+            ClearAllButton.BackColor = Color.FromArgb(251, 251, 251);
             ClearAllButton.FlatAppearance.BorderColor = Color.LightGray;
             ClearAllButton.FlatAppearance.BorderSize = 0;
             ClearAllButton.FlatStyle = FlatStyle.Flat;
@@ -114,10 +108,10 @@
             ClearAllButton.ForeColor = Color.FromArgb(38, 144, 148);
             ClearAllButton.Image = (Image)resources.GetObject("ClearAllButton.Image");
             ClearAllButton.ImageAlign = ContentAlignment.MiddleLeft;
-            ClearAllButton.Location = new Point(843, 522);
+            ClearAllButton.Location = new Point(829, 396);
             ClearAllButton.Name = "ClearAllButton";
             ClearAllButton.Padding = new Padding(5, 0, 0, 0);
-            ClearAllButton.Size = new Size(144, 41);
+            ClearAllButton.Size = new Size(173, 41);
             ClearAllButton.TabIndex = 11;
             ClearAllButton.Text = "ניקוי הכל";
             ClearAllButton.TextAlign = ContentAlignment.MiddleRight;
@@ -134,10 +128,10 @@
             MoveUpButton.ForeColor = Color.FromArgb(38, 144, 148);
             MoveUpButton.Image = (Image)resources.GetObject("MoveUpButton.Image");
             MoveUpButton.ImageAlign = ContentAlignment.MiddleLeft;
-            MoveUpButton.Location = new Point(847, 319);
+            MoveUpButton.Location = new Point(829, 314);
             MoveUpButton.Name = "MoveUpButton";
             MoveUpButton.Padding = new Padding(3, 0, 0, 0);
-            MoveUpButton.Size = new Size(144, 41);
+            MoveUpButton.Size = new Size(173, 41);
             MoveUpButton.TabIndex = 9;
             MoveUpButton.Text = "הזזה למעלה";
             MoveUpButton.TextAlign = ContentAlignment.MiddleRight;
@@ -154,10 +148,10 @@
             MoveDownButton.ForeColor = Color.FromArgb(38, 144, 148);
             MoveDownButton.Image = (Image)resources.GetObject("MoveDownButton.Image");
             MoveDownButton.ImageAlign = ContentAlignment.MiddleLeft;
-            MoveDownButton.Location = new Point(847, 360);
+            MoveDownButton.Location = new Point(829, 355);
             MoveDownButton.Name = "MoveDownButton";
             MoveDownButton.Padding = new Padding(3, 0, 0, 0);
-            MoveDownButton.Size = new Size(144, 41);
+            MoveDownButton.Size = new Size(173, 41);
             MoveDownButton.TabIndex = 10;
             MoveDownButton.Text = "הזזה למטה";
             MoveDownButton.TextAlign = ContentAlignment.MiddleRight;
@@ -174,24 +168,14 @@
             RemoveButton.ForeColor = Color.FromArgb(38, 144, 148);
             RemoveButton.Image = (Image)resources.GetObject("RemoveButton.Image");
             RemoveButton.ImageAlign = ContentAlignment.MiddleLeft;
-            RemoveButton.Location = new Point(847, 278);
+            RemoveButton.Location = new Point(829, 273);
             RemoveButton.Name = "RemoveButton";
-            RemoveButton.Size = new Size(144, 41);
+            RemoveButton.Size = new Size(173, 41);
             RemoveButton.TabIndex = 12;
             RemoveButton.Text = "מחיקת קובץ";
             RemoveButton.TextAlign = ContentAlignment.MiddleRight;
             RemoveButton.UseVisualStyleBackColor = false;
             RemoveButton.Click += RemoveButton_Click;
-            // 
-            // pictureBox2
-            // 
-            pictureBox2.Image = (Image)resources.GetObject("pictureBox2.Image");
-            pictureBox2.Location = new Point(12, 21);
-            pictureBox2.Name = "pictureBox2";
-            pictureBox2.Size = new Size(39, 37);
-            pictureBox2.TabIndex = 13;
-            pictureBox2.TabStop = false;
-            HelpToolTip.SetToolTip(pictureBox2, "יש להוסיף את הקבצים שאותם אתם רוצים לאחד לקובץ אחד");
             // 
             // pictureBoxLoader
             // 
@@ -204,6 +188,51 @@
             pictureBoxLoader.TabIndex = 14;
             pictureBoxLoader.TabStop = false;
             // 
+            // menuStrip1
+            // 
+            menuStrip1.ImageScalingSize = new Size(20, 20);
+            menuStrip1.Items.AddRange(new ToolStripItem[] { toolStripMenuItem1, helpToolStripMenuItem });
+            menuStrip1.Location = new Point(0, 0);
+            menuStrip1.Name = "menuStrip1";
+            menuStrip1.Size = new Size(1006, 28);
+            menuStrip1.TabIndex = 15;
+            menuStrip1.Text = "menuStrip1";
+            // 
+            // toolStripMenuItem1
+            // 
+            toolStripMenuItem1.DropDownItems.AddRange(new ToolStripItem[] { LoadFilesToolStripMenuItem, ExportToolStripMenuItem, clearAllToolStripMenuItem });
+            toolStripMenuItem1.Name = "toolStripMenuItem1";
+            toolStripMenuItem1.Size = new Size(46, 24);
+            toolStripMenuItem1.Text = "File";
+            // 
+            // LoadFilesToolStripMenuItem
+            // 
+            LoadFilesToolStripMenuItem.Name = "LoadFilesToolStripMenuItem";
+            LoadFilesToolStripMenuItem.Size = new Size(183, 26);
+            LoadFilesToolStripMenuItem.Text = "Load Files";
+            LoadFilesToolStripMenuItem.Click += UploadButton_Click;
+            // 
+            // ExportToolStripMenuItem
+            // 
+            ExportToolStripMenuItem.Name = "ExportToolStripMenuItem";
+            ExportToolStripMenuItem.Size = new Size(183, 26);
+            ExportToolStripMenuItem.Text = "Export to PDF";
+            ExportToolStripMenuItem.Click += ConvertToPDFButton_Click;
+            // 
+            // clearAllToolStripMenuItem
+            // 
+            clearAllToolStripMenuItem.Name = "clearAllToolStripMenuItem";
+            clearAllToolStripMenuItem.Size = new Size(183, 26);
+            clearAllToolStripMenuItem.Text = "Clear All";
+            clearAllToolStripMenuItem.Click += ClearAllButton_Click;
+            // 
+            // helpToolStripMenuItem
+            // 
+            helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            helpToolStripMenuItem.Size = new Size(55, 24);
+            helpToolStripMenuItem.Text = "Help";
+            helpToolStripMenuItem.Click += helpToolStripMenuItem_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -211,23 +240,24 @@
             BackColor = Color.FromArgb(234, 234, 234);
             ClientSize = new Size(1006, 633);
             Controls.Add(pictureBoxLoader);
-            Controls.Add(pictureBox2);
             Controls.Add(RemoveButton);
             Controls.Add(MoveDownButton);
             Controls.Add(MoveUpButton);
             Controls.Add(ClearAllButton);
             Controls.Add(ConvertToPDFButton);
-            Controls.Add(pictureBox1);
             Controls.Add(UploadButton);
             Controls.Add(fileListBox);
+            Controls.Add(menuStrip1);
             ForeColor = Color.Black;
+            Icon = (Icon)resources.GetObject("$this.Icon");
+            MainMenuStrip = menuStrip1;
             Name = "Form1";
             RightToLeft = RightToLeft.No;
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "העלאת קבצים";
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
+            Text = "FileMerge";
             ((System.ComponentModel.ISupportInitialize)pictureBoxLoader).EndInit();
+            menuStrip1.ResumeLayout(false);
+            menuStrip1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -236,16 +266,20 @@
 
         private ListBox fileListBox;
         private Button UploadButton;
-        private PictureBox pictureBox1;
         private Button ConvertToPDFButton;
         private Button MoveUpButton2;
         private Button ClearAllButton;
         private Button MoveUpButton;
         private Button MoveDownButton;
         private Button RemoveButton;
-        private PictureBox pictureBox2;
         private ToolTip HelpToolTip;
         private PictureBox pictureBoxLoader;
         private FolderBrowserDialog folderBrowserDialog;
+        private MenuStrip menuStrip1;
+        private ToolStripMenuItem toolStripMenuItem1;
+        private ToolStripMenuItem LoadFilesToolStripMenuItem;
+        private ToolStripMenuItem ExportToolStripMenuItem;
+        private ToolStripMenuItem clearAllToolStripMenuItem;
+        private ToolStripMenuItem helpToolStripMenuItem;
     }
 }

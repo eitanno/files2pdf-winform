@@ -97,8 +97,32 @@ namespace FilesToPDF.Api.Services
             string outputFile = outputPath + "\\" + getFileName(outputFileConfigName) + ".pdf";
             PDFConversionService pdfConversionService = new PDFConversionService();
             pdfConversionService.CombinePDFs(pdfFileNames.ToArray(), outputFile);
+            RemoveFiles(pdfFileNames);
             _logger.LogInformation($"File processed successfully : {outputFile}");
             return new StatusMessage(true, outputFile + " : " + "הקובץ נוצר בהצלחה", outputFile);
+        }
+
+        private void RemoveFiles(List<string> pdfFileNames)
+        {
+            foreach (string fileName in pdfFileNames)
+            {
+                if (File.Exists(fileName))
+                {
+                    try
+                    {
+                        File.Delete(fileName);
+                        Console.WriteLine($"File '{fileName}' removed successfully.");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Error removing file '{fileName}': {ex.Message}");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($"File '{fileName}' does not exist.");
+                }
+            }
         }
 
         private string getFileName(string outputFileConfigName)
