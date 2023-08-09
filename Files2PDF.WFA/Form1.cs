@@ -14,6 +14,8 @@ namespace Files2PDFWFA
         private readonly ILogger<Form1> _logger;
         private BackgroundWorker worker;
 
+        private int hoveredIndex = -1;
+
         public Form1(FilesToPDFService filesToPDFServicee, ILogger<Form1> logger)
         {
             _logger = logger;
@@ -24,7 +26,70 @@ namespace Files2PDFWFA
             worker.DoWork += Worker_DoWork;
             worker.RunWorkerCompleted += Worker_RunWorkerCompleted;
 
+            fileListBox.DrawMode = DrawMode.OwnerDrawVariable;
+            fileListBox.DrawItem += fileListBox_DrawItem;
+            fileListBox.MeasureItem += fileListBox_MeasureItem;
+            //fileListBox.MouseMove += fileListBox_MouseMove;
+
         }
+
+        private void fileListBox_MouseMove(object sender, MouseEventArgs e)
+        {
+            int index = fileListBox.IndexFromPoint(e.Location);
+
+            if (hoveredIndex != index)
+            {
+                hoveredIndex = index;
+                fileListBox.Invalidate();
+            }
+        }
+
+        private void fileListBox_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            if (e.Index < 0)
+                return;
+
+            string itemText = $"{e.Index + 1}. {uploadedFiles[e.Index]}";
+            bool isSelected = (e.State & DrawItemState.Selected) == DrawItemState.Selected;
+            Point mousePosition = fileListBox.PointToClient(Control.MousePosition); // Convert global mouse position to local coordinates
+
+            Color bgColor;
+            if (isSelected)
+            {
+                bgColor = Color.FromArgb(142, 105, 192);
+            }
+            else if (e.Index == hoveredIndex)
+            {
+                bgColor = Color.FromArgb(213, 213, 213);
+            }
+            else
+            {
+                bgColor = (e.Index % 2 == 0) ? Color.FromArgb(251, 251, 251) : Color.FromArgb(240, 240, 240);
+            }
+
+            Color textColor = isSelected ? SystemColors.HighlightText : Color.Black;
+
+            e.DrawBackground();
+            e.Graphics.FillRectangle(new SolidBrush(bgColor), e.Bounds);
+
+            // Draw item text with custom spacing
+            int textOffsetY = 5; // Adjust as needed
+            e.Graphics.DrawString(itemText, fileListBox.Font, new SolidBrush(textColor), e.Bounds.X, e.Bounds.Y + textOffsetY);
+
+            e.DrawFocusRectangle();
+        }
+
+        private void fileListBox_MeasureItem(object sender, MeasureItemEventArgs e)
+        {
+            // Measure the height of each item based on your custom criteria
+            int itemHeight = 30; // You can adjust this value as needed
+            e.ItemHeight = itemHeight;
+        }
+
+        //private void fileListBox_MouseMove(object sender, MouseEventArgs e)
+        //{
+        //    fileListBox.Invalidate();
+        //}
 
         private void Worker_DoWork(object sender, DoWorkEventArgs e)
         {
@@ -120,7 +185,7 @@ namespace Files2PDFWFA
 
         private void RefreshFileList()
         {
-            
+
             fileListBox.Items.Clear();
             for (int i = 0; i < uploadedFiles.Count; i++)
             {
