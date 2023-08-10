@@ -1,8 +1,13 @@
 using Files2PDFWFA.Objects;
+using Files2PDFWFA.Properties;
 using FilesToPDF.Api.Services;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Drawing.Imaging;
+using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Files2PDFWFA
 {
@@ -29,8 +34,16 @@ namespace Files2PDFWFA
             fileListBox.DrawMode = DrawMode.OwnerDrawVariable;
             fileListBox.DrawItem += fileListBox_DrawItem;
             fileListBox.MeasureItem += fileListBox_MeasureItem;
+            fileListBox.VisibleChanged += fileListBox_VisibleChanged;
             //fileListBox.MouseMove += fileListBox_MouseMove;
 
+            labelPlaceholder.Visible = true;
+
+        }
+
+        private void fileListBox_VisibleChanged(object sender, EventArgs e)
+        {
+            labelPlaceholder.Visible = fileListBox.Visible && fileListBox.Items.Count == 0;
         }
 
         private void fileListBox_MouseMove(object sender, MouseEventArgs e)
@@ -64,7 +77,7 @@ namespace Files2PDFWFA
             }
             else
             {
-                bgColor = (e.Index % 2 == 0) ? Color.FromArgb(251, 251, 251) : Color.FromArgb(240, 240, 240);
+                bgColor = (e.Index % 2 == 0) ? Color.FromArgb(251, 251, 251) : Color.FromArgb(236, 236, 236);
             }
 
             Color textColor = isSelected ? SystemColors.HighlightText : Color.Black;
@@ -116,7 +129,14 @@ namespace Files2PDFWFA
             if (status.IsSuccess)
             {
                 string mes = status.Message + Environment.NewLine + "האם לפתוח את הקובץ" + "?";
-                DialogResult result = MessageBox.Show(mes, "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                DialogResult result = MessageBox.Show(
+                      text: mes,
+                      caption: "Confirmation",
+                      buttons: MessageBoxButtons.OKCancel,
+                      icon: MessageBoxIcon.Question,
+                      defaultButton: MessageBoxDefaultButton.Button1,
+                      options: MessageBoxOptions.RightAlign | MessageBoxOptions.RtlReading
+                  );
                 if (result == DialogResult.OK)
                 {
                     // Action to perform after "OK" is clicked
@@ -126,19 +146,38 @@ namespace Files2PDFWFA
                         // Open the file with the associated application
                         Process.Start("cmd", $"/c start {status.Url}");
                         //Process.Start(status.Url);
+                        uploadedFiles.Clear();
+                        RefreshFileList();
                         return;
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(
+                              text: "משהו השתבש, נשמח אם תנסו שוב או פנו למרכז התמיכה לעזרה.",
+                              caption: "Error",
+                              buttons: MessageBoxButtons.OK,
+                              icon: MessageBoxIcon.Error,
+                              defaultButton: MessageBoxDefaultButton.Button1,
+                              options: MessageBoxOptions.RightAlign | MessageBoxOptions.RtlReading
+                          );
                         _logger.LogError(ex.Message);
                         return;
                     }
                 }
+                uploadedFiles.Clear();
+                RefreshFileList();
+
             }
             else
             {
-                MessageBox.Show(status.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(
+                      text: "משהו השתבש, נשמח אם תנסו שוב או פנו למרכז התמיכה לעזרה.",
+                      caption: "Error",
+                      buttons: MessageBoxButtons.OK,
+                      icon: MessageBoxIcon.Error,
+                      defaultButton: MessageBoxDefaultButton.Button1,
+                      options: MessageBoxOptions.RightAlign | MessageBoxOptions.RtlReading
+                  );
                 _logger.LogError(status.Message);
                 return;
             }
@@ -193,6 +232,7 @@ namespace Files2PDFWFA
                 fileListBox.Items.Add(itemText);
 
             }
+            labelPlaceholder.Visible = fileListBox.Items.Count == 0;
         }
 
 
@@ -287,7 +327,42 @@ namespace Files2PDFWFA
 
         private void helpToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("יש לבחור את הקבצים", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(
+                text: "הוראות שימוש:\r\nלבחירת הקבצים לאיחוד יש ללחוץ על כפתור \"טעינת קבצים\",\r\nלאחר בחירת הקבצים אפשר לקבוע את סדר הופעתם על ידי לחיצה על שם הקובץ ולחיצה על כפתורי הזזה למעלה או למטה.\r\nליצירת הקובץ המאוחד יש ללחוץ על כפתור \"יצירת קובץ\", תפתח תיבה לקביעת מיקום התקיה לשמירת קובץ ה-PDF המאוחד.\r\n\r\nהפורמטים הנתמכים:\r\n doc, docx, pdf, xls, xlsx, ppt, pptx, tiff, tif, jpg, jpeg, png.",
+                caption: "Information",
+                buttons: MessageBoxButtons.OK,
+                icon: MessageBoxIcon.Information,
+                defaultButton: MessageBoxDefaultButton.Button1,
+                options: MessageBoxOptions.RightAlign | MessageBoxOptions.RtlReading
+            );
+
+        }
+
+        private void OpenLogsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var configuration = new ConfigurationBuilder()
+                 .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+                 .AddJsonFile("appsettings.json")
+                 .Build();
+            string? specificFolderPath = configuration["Logging:File:BasePath"];
+
+            try
+            {
+                Process.Start("explorer.exe", specificFolderPath);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                     text: "משהו השתבש, נשמח אם תנסו שוב או פנו למרכז התמיכה לעזרה.",
+                     caption: "Error",
+                     buttons: MessageBoxButtons.OK,
+                     icon: MessageBoxIcon.Error,
+                     defaultButton: MessageBoxDefaultButton.Button1,
+                     options: MessageBoxOptions.RightAlign | MessageBoxOptions.RtlReading
+               );
+                _logger.LogError(ex.Message);
+            }
+
         }
     }
 }

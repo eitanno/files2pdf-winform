@@ -99,7 +99,7 @@ namespace FilesToPDF.Api.Services
             pdfConversionService.CombinePDFs(pdfFileNames.ToArray(), outputFile);
             RemoveFiles(pdfFileNames);
             _logger.LogInformation($"File processed successfully : {outputFile}");
-            return new StatusMessage(true, outputFile + " : " + "הקובץ נוצר בהצלחה", outputFile);
+            return new StatusMessage(true, "הקובץ המאוחד נוצר בהצלחה!\r\nמיקום הקובץ:\r\n" + outputFile, outputFile);
         }
 
         private void RemoveFiles(List<string> pdfFileNames)

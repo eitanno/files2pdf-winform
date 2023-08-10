@@ -31,7 +31,7 @@ namespace Files2PDFWFA
                  {
                      //builder.AddConfiguration(configuration.GetSection("Logging:File:Path"));
                      builder.AddConsole();
-                     builder.AddFile(configuration["Logging:File:Path"]);
+                     builder.AddFile(pathFormat: configuration["Logging:File:Path"], fileSizeLimitBytes: 500000, retainedFileCountLimit: 1);
                  });
 
                  services.AddSingleton<ExcelConversionService>();
