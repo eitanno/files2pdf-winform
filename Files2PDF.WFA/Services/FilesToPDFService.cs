@@ -49,7 +49,7 @@ namespace FilesToPDF.Api.Services
 
             foreach (string file in uploadedFiles)
             {
-                string fileType = Path.GetExtension(file);
+                string fileType = Path.GetExtension(file).ToLowerInvariant();
                 string fileName = Path.GetFileNameWithoutExtension(file);
                 string outputFileName = outputPath + "\\" + fileName + ".pdf";
 

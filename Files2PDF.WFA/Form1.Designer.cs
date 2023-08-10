@@ -54,7 +54,7 @@
             // 
             fileListBox.FormattingEnabled = true;
             fileListBox.ItemHeight = 20;
-            fileListBox.Location = new Point(20, 102);
+            fileListBox.Location = new Point(17, 102);
             fileListBox.Name = "fileListBox";
             fileListBox.Size = new Size(797, 504);
             fileListBox.TabIndex = 0;
@@ -107,10 +107,10 @@
             ClearAllButton.ForeColor = Color.FromArgb(38, 144, 148);
             ClearAllButton.Image = (Image)resources.GetObject("ClearAllButton.Image");
             ClearAllButton.ImageAlign = ContentAlignment.MiddleLeft;
-            ClearAllButton.Location = new Point(827, 396);
+            ClearAllButton.Location = new Point(831, 396);
             ClearAllButton.Name = "ClearAllButton";
             ClearAllButton.Padding = new Padding(5, 0, 0, 0);
-            ClearAllButton.Size = new Size(173, 41);
+            ClearAllButton.Size = new Size(168, 41);
             ClearAllButton.TabIndex = 11;
             ClearAllButton.Text = "ניקוי הכל";
             ClearAllButton.TextAlign = ContentAlignment.MiddleRight;
@@ -127,10 +127,10 @@
             MoveUpButton.ForeColor = Color.FromArgb(38, 144, 148);
             MoveUpButton.Image = (Image)resources.GetObject("MoveUpButton.Image");
             MoveUpButton.ImageAlign = ContentAlignment.MiddleLeft;
-            MoveUpButton.Location = new Point(827, 314);
+            MoveUpButton.Location = new Point(831, 314);
             MoveUpButton.Name = "MoveUpButton";
             MoveUpButton.Padding = new Padding(3, 0, 0, 0);
-            MoveUpButton.Size = new Size(173, 41);
+            MoveUpButton.Size = new Size(168, 41);
             MoveUpButton.TabIndex = 9;
             MoveUpButton.Text = "הזזה למעלה";
             MoveUpButton.TextAlign = ContentAlignment.MiddleRight;
@@ -147,10 +147,10 @@
             MoveDownButton.ForeColor = Color.FromArgb(38, 144, 148);
             MoveDownButton.Image = (Image)resources.GetObject("MoveDownButton.Image");
             MoveDownButton.ImageAlign = ContentAlignment.MiddleLeft;
-            MoveDownButton.Location = new Point(827, 355);
+            MoveDownButton.Location = new Point(831, 355);
             MoveDownButton.Name = "MoveDownButton";
             MoveDownButton.Padding = new Padding(3, 0, 0, 0);
-            MoveDownButton.Size = new Size(173, 41);
+            MoveDownButton.Size = new Size(168, 41);
             MoveDownButton.TabIndex = 10;
             MoveDownButton.Text = "הזזה למטה";
             MoveDownButton.TextAlign = ContentAlignment.MiddleRight;
@@ -167,9 +167,9 @@
             RemoveButton.ForeColor = Color.FromArgb(38, 144, 148);
             RemoveButton.Image = (Image)resources.GetObject("RemoveButton.Image");
             RemoveButton.ImageAlign = ContentAlignment.MiddleLeft;
-            RemoveButton.Location = new Point(827, 273);
+            RemoveButton.Location = new Point(831, 273);
             RemoveButton.Name = "RemoveButton";
-            RemoveButton.Size = new Size(173, 41);
+            RemoveButton.Size = new Size(168, 41);
             RemoveButton.TabIndex = 12;
             RemoveButton.Text = "מחיקת קובץ";
             RemoveButton.TextAlign = ContentAlignment.MiddleRight;
